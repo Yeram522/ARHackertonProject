@@ -10,13 +10,14 @@ public class PlaceThePalace : MonoBehaviour
     public GameObject spawnPrefab;
 
     private List<ARRaycastHit> hits = new List<ARRaycastHit>();
-
+    private int hitCount = 0;
     void Update()
     {
-        if(Input.touchCount==0)
+
+        if(Input.touchCount==0 | hitCount>=1)
         {
             return;
-        }
+        } 
 
         Touch touch = Input.GetTouch(0);
 
@@ -27,6 +28,7 @@ public class PlaceThePalace : MonoBehaviour
 
         if (arRaycaster.Raycast(touch.position, hits, TrackableType.Planes)) {
            Pose hitPose = hits[0].pose;
+            hitCount += 1;
 
             Instantiate(spawnPrefab, hitPose.position, hitPose.rotation);
         };
